@@ -1,1 +1,10 @@
-build/
+# CLion project files
+.idea/
+
+# CMake build output
+/build/
+/cmake-build-debug/
+/cmake-build-release/
+
+# OS junk
+.DS_Store
