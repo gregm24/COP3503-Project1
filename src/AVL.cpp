@@ -110,3 +110,60 @@ void AVL::insert(const string& name, const string& ID) {
     if (inserted) cout << "successful" << endl;
     else cout << "unsuccessful" << endl;
 }
+
+AVL::Node* AVL::minNode(Node* n) {
+    Node* current = n;
+    while (current && current->left) current = current->left;
+    return current;
+}
+
+AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
+    if (!node) return nullptr;
+
+    if (id_num < node->ID_num) {
+        node->left = removeRecursiveHelper(node->left, id_num, removed);
+        return node;
+    } else if {
+        node->right = removeRecursiveHelper(node->right, id_num, removed);
+        return node;
+    } else {
+        removed = true;
+
+        if (!node->left && !node->right) {
+            delete node;
+            return nullptr;
+        }
+
+        if (!node->left) {
+            Node* r = node->right;
+            delete node;
+            return r;
+        }
+
+        if (!node->right) {
+            Node* l = node->left;
+            delete node;
+            return l;
+        }
+
+        Node* successor = minNode(node->right);
+        node->name = successor->name;
+        node->ID_str = successor->ID_str;
+        node->ID_num = successor->ID_num;
+        node->right = removeRecursiveHelper(node->right, successor->ID_num, removed);
+        return node;
+    }
+}
+
+void AVL::remove(const string& ID) {
+    if (!validID(ID)) {
+        cout << "unsuccessful" << endl;
+        return;
+    }
+
+    int id_num = stoi(ID);
+    bool removed = false;
+    root = removeRecursiveHelper(root, id_num, removed);
+    if (removed) cout << "successful" << endl;
+    else cout << "unsuccessful" << endl;
+}

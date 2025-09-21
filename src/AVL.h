@@ -50,6 +50,8 @@ private:
   bool validName(const string& name);
   bool validID(const string& ID);
   Node* insertRecursiveHelper(Node* node, const string& name, const string& ID, int id_num, bool& inserted);
+  Node* minNode(Node* n);
+  Node* removeRecursiveHelper(Node* node, int id_num, bool& removed);
 };
 
 
