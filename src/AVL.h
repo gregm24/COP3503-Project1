@@ -47,6 +47,8 @@ private:
   int balance(Node* n);
   Node* rotateRight(Node* y);
   Node* rotateLeft(Node* x);
+  bool validName(const string& name);
+  bool validID(const string& ID);
 };
 
 
