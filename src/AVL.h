@@ -11,9 +11,9 @@ using namespace std;
 
 class AVL {
 public:
-  void insert(const string& name, const string& ufid);        
-  void remove(const string& ufid);                            
-  void searchID(const string& ufid);                        
+  void insert(const string& name, const string& ID);        
+  void remove(const string& ID);                            
+  void searchID(const string& ID);                        
   void searchName(const string& name);                      
   void printInorder();                                        
   void printPreorder();                                       
