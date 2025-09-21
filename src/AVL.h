@@ -45,8 +45,8 @@ private:
   int height(Node* n);
   void update(Node* n);
   int balance(Node* n);
-  Node* rotateLeft(Node* n);
-  Node* rotateRight(Node* n);
+  Node* rotateRight(Node* y);
+  Node* rotateLeft(Node* x);
 };
 
 
