@@ -11,14 +11,14 @@ using namespace std;
 
 class AVL {
 public:
-  void insert(const string& name, const string& ufid);        // prints successful/unsuccessful
-  void remove(const string& ufid);                            // prints successful/unsuccessful
-  void searchID(const string& ufid);                        // prints NAME or unsuccessful
-  void searchName(const string& name);                      // prints IDs or unsuccessful
-  void printInorder();                                        // prints comma-separated names
-  void printPreorder();                                       // prints comma-separated names
-  void printPostorder();                                      // prints comma-separated names
-  void printLevelCount();                                     // prints integer
+  void insert(const string& name, const string& ufid);        
+  void remove(const string& ufid);                            
+  void searchID(const string& ufid);                        
+  void searchName(const string& name);                      
+  void printInorder();                                        
+  void printPreorder();                                       
+  void printPostorder();                                      
+  void printLevelCount();                                     
   void removeInorder(int n);    
 
   vector<int> inorder() {
@@ -27,6 +27,26 @@ public:
   bool runCommand(string cmd) {
     return false;
   }
+
+private:
+  struct Node {
+    string name;
+    string ID_str;
+    int ID_num;
+    int height;
+    Node* left;
+    Node* right;
+    Node (const string& n, const string& s, int i)
+      : name(n), ID_str(s), ID_num(i), height(1), left(nullptr), right(nullptr) {}
+  };
+
+  Node* root = nullptr; 
+
+  int height(Node* n);
+  void update(Node* n);
+  int balance(Node* n);
+  Node* rotateLeft(Node* n);
+  Node* rotateRight(Node* n);
 };
 
 
