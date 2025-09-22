@@ -167,3 +167,22 @@ void AVL::remove(const string& ID) {
     if (removed) cout << "successful" << endl;
     else cout << "unsuccessful" << endl;
 }
+
+void AVL::searchID(const string& ID) {
+    if (!validID(ID)) {
+        cout << unsuccessful << endl;
+        return;
+    }
+
+    int id_num = stoi(ID);
+
+    Node* current = root;
+    while (current) {
+        if (id_num == current->ID_num) {
+            cout << current->name << endl;
+            return; 
+        } else if (id_num < current->ID_num) current -> current->left;
+        else current -> current->right;
+    }
+    cout << "unsuccessful" << endl;
+}
