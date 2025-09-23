@@ -213,3 +213,21 @@ void AVL::searchName(const string& name) {
         if (!found) cout << "unsuccessful" << endl;
     }
 }
+
+void AVL::printInorderHelper(Node* node, bool& first) {
+    if (!node) return;
+
+    printInOrderHelper(node->left, first);
+    
+    if (!first) cout << ", ";
+    cout << node->name;
+    first = false;
+
+    printInOrderHelper(node->right, first);
+}
+
+void AVL::printInorder() {
+    bool first = true;
+    printInOrderHelper(root, first);
+    cout << endl;
+}
