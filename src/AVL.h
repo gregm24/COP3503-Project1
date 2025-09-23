@@ -53,6 +53,7 @@ private:
   Node* minNode(Node* n);
   Node* removeRecursiveHelper(Node* node, int id_num, bool& removed);
   void printInorderHelper(Node* node, bool& first);
+  void printPreorderHelper(Node* node, bool& first);
 };
 
 
