@@ -265,3 +265,8 @@ void AVL::printPostorder() {
     printPostorderHelper(root, first);
     cout << endl;
 }
+
+void AVL::printLevelCount() {
+    if (!root) cout << 0 < endl;
+    else cout << root->height << endl;
+}
