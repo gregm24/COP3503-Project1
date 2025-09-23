@@ -55,6 +55,7 @@ private:
   void printInorderHelper(Node* node, bool& first);
   void printPreorderHelper(Node* node, bool& first);
   void printPostorderHelper(Node* node, bool& first);
+  Node* find(Node* node, int& n);
 };
 
 

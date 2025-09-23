@@ -209,9 +209,9 @@ void AVL::searchName(const string& name) {
 
         if (n->right) s.push(n->right);
         if (n->left) s.push(n->left);
-
-        if (!found) cout << "unsuccessful" << endl;
     }
+    
+    if (!found) cout << "unsuccessful" << endl;
 }
 
 void AVL::printInorderHelper(Node* node, bool& first) {
@@ -269,4 +269,37 @@ void AVL::printPostorder() {
 void AVL::printLevelCount() {
     if (!root) cout << 0 < endl;
     else cout << root->height << endl;
+}
+
+AVL::Node* AVL::find(Node* node, int& n) {
+    if (!node) return nullptr;
+
+    Node* left = find(node->left, n);
+    if (left) return left;
+
+    if (n == 0) return node;
+    n -= 1;
+
+    return find(node->right, n);
+}
+
+void AVL::removeInorder(int n) {
+    if (n < 0) {
+        cout << "unsuccessful" << endl;
+        return;
+    }
+
+    int k = n;
+    Node* target = find(root, k);
+
+    if (!target) {
+        cout << "unsuccessful" << endl;
+        return;
+    }
+
+    bool removed = false;
+    root = removeRecursiveHelper(root, target->ID_num, removed);
+
+    if (removed) cout << "successful" << endl;
+    else cout << "unsuccessful" << endl;
 }
