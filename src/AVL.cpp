@@ -231,3 +231,37 @@ void AVL::printInorder() {
     printInOrderHelper(root, first);
     cout << endl;
 }
+
+void AVL::printPreorderHelper(Node* node, bool& first) {
+    if (!node) return;
+
+    if (!first) cout << ", ";
+    cout << node->name;
+    first = false;
+
+    printPreorderHelper(node->left, first);
+    printPreorderHelper(node->right, first);
+}
+
+void AVL::printPreorder() {
+    bool first = true;
+    printPreorderHelper(root, first);
+    cout << endl;
+}
+
+void AVL::printPostorderHelper(Node* node, bool& first) {
+    if (!node) return;
+
+    printPostorderHelper(node->left, first);
+    printPostorderHelper(node->right, first);
+
+    if (!first) cout << ", ";
+    cout << node->name;
+    first = false;
+}
+
+void AVL::printPostorder() {
+    bool first = true;
+    printPostorderHelper(root, first);
+    cout << endl;
+}

@@ -54,6 +54,7 @@ private:
   Node* removeRecursiveHelper(Node* node, int id_num, bool& removed);
   void printInorderHelper(Node* node, bool& first);
   void printPreorderHelper(Node* node, bool& first);
+  void printPostorderHelper(Node* node, bool& first);
 };
 
 
