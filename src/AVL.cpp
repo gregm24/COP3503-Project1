@@ -1,6 +1,7 @@
 #include "AVL.h"
 #include <iostream>
 #include <algorithm>
+#include <stack>
 using namespace std;
 
 int AVL::height(Node* n) {
@@ -123,7 +124,7 @@ AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
     if (id_num < node->ID_num) {
         node->left = removeRecursiveHelper(node->left, id_num, removed);
         return node;
-    } else if {
+    } else if (id_num > node->ID_num){
         node->right = removeRecursiveHelper(node->right, id_num, removed);
         return node;
     } else {
@@ -170,7 +171,7 @@ void AVL::remove(const string& ID) {
 
 void AVL::searchID(const string& ID) {
     if (!validID(ID)) {
-        cout << unsuccessful << endl;
+        cout << "unsuccessful" << endl;
         return;
     }
 
@@ -181,8 +182,34 @@ void AVL::searchID(const string& ID) {
         if (id_num == current->ID_num) {
             cout << current->name << endl;
             return; 
-        } else if (id_num < current->ID_num) current -> current->left;
-        else current -> current->right;
+        } else if (id_num < current->ID_num) current = current->left;
+        else current = current->right;
     }
     cout << "unsuccessful" << endl;
+}
+
+void AVL::searchName(const string& name) {
+    if (!validName(name)) {
+        cout << "unsuccessful" << endl;
+        return;
+    }
+
+    stack<Node*> s;
+    if (root) s.push(root);
+    
+    bool found = false;
+    while (!s.empty()) {
+        Node* n = s.top();
+        s.pop();
+
+        if (n->name == name) {
+            cout << n->ID_str << endl;
+            found = true;
+        }
+
+        if (n->right) s.push(n->right);
+        if (n->left) s.push(n->left);
+
+        if (!found) cout << "unsuccessful" << endl;
+    }
 }
