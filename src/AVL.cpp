@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stack>
+#include <vector>
 using namespace std;
 
 int AVL::height(Node* n) {
@@ -217,18 +218,18 @@ void AVL::searchName(const string& name) {
 void AVL::printInorderHelper(Node* node, bool& first) {
     if (!node) return;
 
-    printInOrderHelper(node->left, first);
+    printInorderHelper(node->left, first);
     
     if (!first) cout << ", ";
     cout << node->name;
     first = false;
 
-    printInOrderHelper(node->right, first);
+    printInorderHelper(node->right, first);
 }
 
 void AVL::printInorder() {
     bool first = true;
-    printInOrderHelper(root, first);
+    printInorderHelper(root, first);
     cout << endl;
 }
 
@@ -267,20 +268,20 @@ void AVL::printPostorder() {
 }
 
 void AVL::printLevelCount() {
-    if (!root) cout << 0 < endl;
+    if (!root) cout << 0 << endl;
     else cout << root->height << endl;
 }
 
-AVL::Node* AVL::find(Node* node, int& n) {
+AVL::Node* AVL::removeInorderHelper(Node* node, int& n) {
     if (!node) return nullptr;
 
-    Node* left = find(node->left, n);
+    Node* left = removeInorderHelper(node->left, n);
     if (left) return left;
 
     if (n == 0) return node;
     n -= 1;
 
-    return find(node->right, n);
+    return removeInorderHelper(node->right, n);
 }
 
 void AVL::removeInorder(int n) {
@@ -290,7 +291,7 @@ void AVL::removeInorder(int n) {
     }
 
     int k = n;
-    Node* target = find(root, k);
+    Node* target = removeInorderHelper(root, k);
 
     if (!target) {
         cout << "unsuccessful" << endl;
@@ -302,4 +303,17 @@ void AVL::removeInorder(int n) {
 
     if (removed) cout << "successful" << endl;
     else cout << "unsuccessful" << endl;
+}
+
+void AVL::inorderHelper(Node *node, vector<int>& result) {
+    if (!node) return;
+    inorderHelper(node->left, result);
+    result.push_back(node->ID_num);
+    inorderHelper(node->right, result);
+}
+
+vector<int> AVL::inorder() {
+    vector<int> result;
+    inorderHelper(root, result);
+    return result;
 }

@@ -11,6 +11,7 @@ using namespace std;
 
 class AVL {
 public:
+  // PROJECT FUNCTIONS
   void insert(const string& name, const string& ID);        
   void remove(const string& ID);                            
   void searchID(const string& ID);                        
@@ -19,16 +20,11 @@ public:
   void printPreorder();                                       
   void printPostorder();                                      
   void printLevelCount();                                     
-  void removeInorder(int n);    
-
-  vector<int> inorder() {
-    return {};
-  }
-  bool runCommand(string cmd) {
-    return false;
-  }
+  void removeInorder(int n);
+  vector<int> inorder();
 
 private:
+  // NODE
   struct Node {
     string name;
     string ID_str;
@@ -42,6 +38,7 @@ private:
 
   Node* root = nullptr; 
 
+  // HELPER FUNCTIONS
   int height(Node* n);
   void update(Node* n);
   int balance(Node* n);
@@ -55,7 +52,8 @@ private:
   void printInorderHelper(Node* node, bool& first);
   void printPreorderHelper(Node* node, bool& first);
   void printPostorderHelper(Node* node, bool& first);
-  Node* find(Node* node, int& n);
+  Node* removeInorderHelper(Node* node, int& n);
+  void inorderHelper(Node* node, vector<int>& result);
 };
 
 
