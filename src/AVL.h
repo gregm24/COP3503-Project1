@@ -22,6 +22,7 @@ public:
   void printLevelCount();                                     
   void removeInorder(int n);
   vector<int> inorder();
+  ~AVL();
 
 private:
   // NODE

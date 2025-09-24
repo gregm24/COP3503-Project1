@@ -323,3 +323,14 @@ vector<int> AVL::inorder() {  // Returns the inorder traversal of IDs
     inorderHelper(root, result);
     return result;
 }
+
+AVL::~AVL() {  // Destructor
+    function<void(Node*)> clear = [&](Node* n) {
+        if (!n) return;
+        clear(n->left);
+        clear(n->right);
+        delete n;
+    };
+    clear(root);
+    root = nullptr;
+}
