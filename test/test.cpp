@@ -10,7 +10,7 @@ using namespace std;
 
 // Gregory Myers - 74883466
 
-TEST_CASE("Incorrect Commands", "[flag]") {
+TEST_CASE("Incorrect Commands", "[flag]") {  // Tests invalid commands and inputs to insure the AVL tree rejects them.
 	AVL tree;
 
 	tree.insert("", "12345678");
@@ -25,7 +25,7 @@ TEST_CASE("Incorrect Commands", "[flag]") {
 	REQUIRE(tree.inorder().empty());
 }
 
-TEST_CASE("Edge Cases", "[flag]") {
+TEST_CASE("Edge Cases", "[flag]") {  //  Tests removing from an empty tree, attempting to insert a duplicate id, and removing a non-existent index.
 	AVL t;
 
 	t.remove("99999999");
@@ -33,14 +33,14 @@ TEST_CASE("Edge Cases", "[flag]") {
 
 	t.insert("Alice", "00000100");
 	vector<int> snapshot = t.inorder();
-	t.insert("Bob", "00000100");          // duplicate ID, rejected
+	t.insert("Bob", "00000100");
 	REQUIRE(t.inorder() == snapshot);
 
 	t.removeInorder(5);
 	REQUIRE(t.inorder() == snapshot);
 }
 
-TEST_CASE("Rotations", "[flag]") {
+TEST_CASE("Rotations", "[flag]") {  // Tests all four AVL rotation cases.
 
 	SECTION("right rotation") {
 		AVL t;
@@ -99,7 +99,7 @@ TEST_CASE("Rotations", "[flag]") {
 	}
 }
 
-TEST_CASE("3 Deletion Cases", "[flag]") {
+TEST_CASE("3 Deletion Cases", "[flag]") {  // Tests deleting a leaf node, a node with one child, and a node with two children.
 	AVL t;
 
 	t.insert("A", "00000020");
@@ -126,7 +126,7 @@ TEST_CASE("3 Deletion Cases", "[flag]") {
 	REQUIRE(t.inorder() == exp3);
 }
 
-TEST_CASE("BST Insert", "[flag]"){
+TEST_CASE("BST Insert", "[flag]"){ // Inserts 100 unique random IDs and removes 10.
 	AVL t;
 	vector<int> expected, actual;
 
