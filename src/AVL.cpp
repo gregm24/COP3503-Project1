@@ -5,12 +5,12 @@
 #include <vector>
 using namespace std;
 
-int AVL::height(Node* n) {
+int AVL::height(Node* n) {  // Returns the stored height of a node.
     if (!n) return 0;
     else return n->height;
 }
 
-void AVL::update(Node* n) {
+void AVL::update(Node* n) {  // Recomputes a node's height from its children.
     if (!n) return;
     
     int lh = height(n->left);
@@ -23,12 +23,12 @@ void AVL::update(Node* n) {
     }
 }
 
-int AVL::balance(Node* n) {
+int AVL::balance(Node* n) {  // Returns balance factor.
     if (!n) return 0;
     else return height(n->left) - height(n->right);
 }
 
-AVL::Node* AVL::rotateRight(Node* y) {
+AVL::Node* AVL::rotateRight(Node* y) { // Performs an AVL right rotation rooted at y; returns new subtree root.
     Node* x = y->left;
     Node* z = nullptr;
     if (x) z = x->right;
@@ -39,7 +39,7 @@ AVL::Node* AVL::rotateRight(Node* y) {
     return x;
 }
 
-AVL::Node* AVL::rotateLeft(Node* x) {
+AVL::Node* AVL::rotateLeft(Node* x) {  // Performs an AVL left rotation rooted at x; returns new subtree root.
     Node* y = x->right;
     Node* z = nullptr;
     if (y) z = y->left;
@@ -50,7 +50,7 @@ AVL::Node* AVL::rotateLeft(Node* x) {
     return y;
 }
 
-bool AVL::validName(const string& name) {
+bool AVL::validName(const string& name) {  // Validates that name is non-empty and contains only letters and spaces.
     if (name.empty()) return false;
     for (size_t i = 0; i < name.size(); i++) {
         char c = name[i];
@@ -59,7 +59,7 @@ bool AVL::validName(const string& name) {
     return true;
 }
 
-bool AVL::validID(const string& ID) {
+bool AVL::validID(const string& ID) {  // Validates that ID is exactly 8 numeric digits.
     if (ID.size() != 8) return false;
     for (size_t i = 0; i < ID.size(); i++) {
         char c = ID[i];
@@ -68,7 +68,7 @@ bool AVL::validID(const string& ID) {
     return true;
 }
 
-AVL::Node* AVL::insertRecursiveHelper(Node* node, const string& name, const string& ID, int id_num, bool& inserted) {
+AVL::Node* AVL::insertRecursiveHelper(Node* node, const string& name, const string& ID, int id_num, bool& inserted) {  // Recursive BST insert with AVL rebalancing.
     if (!node) {
         inserted = true;
         return new Node(name, ID, id_num);
@@ -86,6 +86,7 @@ AVL::Node* AVL::insertRecursiveHelper(Node* node, const string& name, const stri
     update(node);
     int b = balance(node);
 
+    // Four standard AVL cases
     if (b > 1 && id_num < node->left->ID_num) return rotateRight(node);
     if (b < -1 && id_num > node->right->ID_num) return rotateLeft(node);
     if (b > 1 && id_num > node->left->ID_num) {
@@ -99,7 +100,7 @@ AVL::Node* AVL::insertRecursiveHelper(Node* node, const string& name, const stri
     return node;
 }
 
-void AVL::insert(const string& name, const string& ID) {
+void AVL::insert(const string& name, const string& ID) {  // Validates inputs, inserts into AVL, prints success/unsuccessful.
     if (!validName(name) || !validID(ID)) {
         cout << "unsuccessful" << endl;
         return;
@@ -113,13 +114,13 @@ void AVL::insert(const string& name, const string& ID) {
     else cout << "unsuccessful" << endl;
 }
 
-AVL::Node* AVL::minNode(Node* n) {
+AVL::Node* AVL::minNode(Node* n) {  // Returns pointer to minimum node in a subtree.
     Node* current = n;
     while (current && current->left) current = current->left;
     return current;
 }
 
-AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
+AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {  // Recursive BST delete by ID, uses inorder sucessor for two-childen case.
     if (!node) return nullptr;
 
     if (id_num < node->ID_num) {
@@ -131,23 +132,27 @@ AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
     } else {
         removed = true;
 
+        // No children
         if (!node->left && !node->right) {
             delete node;
             return nullptr;
         }
 
+        // Only right child
         if (!node->left) {
             Node* r = node->right;
             delete node;
             return r;
         }
 
+        // Only left child
         if (!node->right) {
             Node* l = node->left;
             delete node;
             return l;
         }
 
+        // Two children
         Node* successor = minNode(node->right);
         node->name = successor->name;
         node->ID_str = successor->ID_str;
@@ -157,7 +162,7 @@ AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
     }
 }
 
-void AVL::remove(const string& ID) {
+void AVL::remove(const string& ID) {  // Validates ID, deletes node by ID, prints success/unsuccesful.
     if (!validID(ID)) {
         cout << "unsuccessful" << endl;
         return;
@@ -170,7 +175,7 @@ void AVL::remove(const string& ID) {
     else cout << "unsuccessful" << endl;
 }
 
-void AVL::searchID(const string& ID) {
+void AVL::searchID(const string& ID) {  // Searches by ID and prints the matching name or "unsuccessful".
     if (!validID(ID)) {
         cout << "unsuccessful" << endl;
         return;
@@ -189,7 +194,8 @@ void AVL::searchID(const string& ID) {
     cout << "unsuccessful" << endl;
 }
 
-void AVL::searchName(const string& name) {
+void AVL::searchName(const string& name) {  // Searches for all nodes whose name exactly matches and prints IDs in preorder order or "unsuccessful" if none.
+
     if (!validName(name)) {
         cout << "unsuccessful" << endl;
         return;
@@ -215,7 +221,7 @@ void AVL::searchName(const string& name) {
     if (!found) cout << "unsuccessful" << endl;
 }
 
-void AVL::printInorderHelper(Node* node, bool& first) {
+void AVL::printInorderHelper(Node* node, bool& first) {  // Inorder traversal to print names with comma seperation.
     if (!node) return;
 
     printInorderHelper(node->left, first);
@@ -227,13 +233,13 @@ void AVL::printInorderHelper(Node* node, bool& first) {
     printInorderHelper(node->right, first);
 }
 
-void AVL::printInorder() {
+void AVL::printInorder() {  // Prints comma-seperated inorder traversal of names.
     bool first = true;
     printInorderHelper(root, first);
     cout << endl;
 }
 
-void AVL::printPreorderHelper(Node* node, bool& first) {
+void AVL::printPreorderHelper(Node* node, bool& first) {  // Preorder traversal to print names with comma separation.
     if (!node) return;
 
     if (!first) cout << ", ";
@@ -244,13 +250,13 @@ void AVL::printPreorderHelper(Node* node, bool& first) {
     printPreorderHelper(node->right, first);
 }
 
-void AVL::printPreorder() {
+void AVL::printPreorder() {  // Prints comma-seperated preorder traversal of names.
     bool first = true;
     printPreorderHelper(root, first);
     cout << endl;
 }
 
-void AVL::printPostorderHelper(Node* node, bool& first) {
+void AVL::printPostorderHelper(Node* node, bool& first) {  // Postorder traversal to print names with comma seperation.
     if (!node) return;
 
     printPostorderHelper(node->left, first);
@@ -261,18 +267,18 @@ void AVL::printPostorderHelper(Node* node, bool& first) {
     first = false;
 }
 
-void AVL::printPostorder() {
+void AVL::printPostorder() {  // Prints comma-seperated postorder traversal of names.
     bool first = true;
     printPostorderHelper(root, first);
     cout << endl;
 }
 
-void AVL::printLevelCount() {
+void AVL::printLevelCount() {  // Prints the number of levels in the tree.
     if (!root) cout << 0 << endl;
     else cout << root->height << endl;
 }
 
-AVL::Node* AVL::removeInorderHelper(Node* node, int& n) {
+AVL::Node* AVL::removeInorderHelper(Node* node, int& n) {  // Returns pointer to the nth node (0-based) in inorder traversal.
     if (!node) return nullptr;
 
     Node* left = removeInorderHelper(node->left, n);
@@ -284,7 +290,7 @@ AVL::Node* AVL::removeInorderHelper(Node* node, int& n) {
     return removeInorderHelper(node->right, n);
 }
 
-void AVL::removeInorder(int n) {
+void AVL::removeInorder(int n) {  // Removes the nth node (by inorder index) if it exists and prints success/unsuccesful.
     if (n < 0) {
         cout << "unsuccessful" << endl;
         return;
@@ -305,14 +311,14 @@ void AVL::removeInorder(int n) {
     else cout << "unsuccessful" << endl;
 }
 
-void AVL::inorderHelper(Node *node, vector<int>& result) {
+void AVL::inorderHelper(Node *node, vector<int>& result) {  // Inorder traversal that collects IDs into 'result'.
     if (!node) return;
     inorderHelper(node->left, result);
     result.push_back(node->ID_num);
     inorderHelper(node->right, result);
 }
 
-vector<int> AVL::inorder() {
+vector<int> AVL::inorder() {  // Returns the inorder traversal of IDs
     vector<int> result;
     inorderHelper(root, result);
     return result;
