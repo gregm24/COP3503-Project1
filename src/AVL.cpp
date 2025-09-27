@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stack>
 #include <vector>
+#include <functional>
 using namespace std;
 
 int AVL::height(Node* n) {  // Returns the stored height of a node.
@@ -120,44 +121,43 @@ AVL::Node* AVL::minNode(Node* n) {  // Returns pointer to minimum node in a subt
     return current;
 }
 
-AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {  // Recursive BST delete by ID, uses inorder sucessor for two-childen case.
+AVL::Node* AVL::removeRecursiveHelper(Node* node, int id_num, bool& removed) {
     if (!node) return nullptr;
 
     if (id_num < node->ID_num) {
         node->left = removeRecursiveHelper(node->left, id_num, removed);
+        update(node);
         return node;
     } else if (id_num > node->ID_num){
         node->right = removeRecursiveHelper(node->right, id_num, removed);
+        update(node);
         return node;
     } else {
         removed = true;
 
-        // No children
         if (!node->left && !node->right) {
             delete node;
             return nullptr;
         }
 
-        // Only right child
         if (!node->left) {
             Node* r = node->right;
             delete node;
             return r;
         }
 
-        // Only left child
         if (!node->right) {
             Node* l = node->left;
             delete node;
             return l;
         }
 
-        // Two children
         Node* successor = minNode(node->right);
         node->name = successor->name;
         node->ID_str = successor->ID_str;
         node->ID_num = successor->ID_num;
         node->right = removeRecursiveHelper(node->right, successor->ID_num, removed);
+        update(node);
         return node;
     }
 }

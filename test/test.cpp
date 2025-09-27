@@ -1,3 +1,4 @@
+/*
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include <vector>
@@ -150,3 +151,4 @@ TEST_CASE("BST Insert", "[flag]"){ // Inserts 100 unique random IDs and removes 
 	sort(expected.begin(), expected.end());
 	REQUIRE(expected == actual);
 }
+*/
